@@ -12,7 +12,7 @@ This is a project with Scrapy and Selenium combined in order to crawl booking.co
 
 4- navigate to ReviewsScraper folder. 
 
-5- open the local terminal and run: scrapy crawl hotels -a city="<name_of_the_city>" -s filename="<file_name>.csv"
+5- open the local terminal and run: scrapy crawl hotels -a city="<name_of_the_city>" -s filename="<file_name>.csv" --loglevel=ERROR
 
 
 ## Expected Output: 

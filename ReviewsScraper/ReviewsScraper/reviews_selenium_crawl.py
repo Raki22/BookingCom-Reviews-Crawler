@@ -1,6 +1,7 @@
 from sys import argv
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -10,7 +11,7 @@ from bs4 import BeautifulSoup
 import time
 from .serializers import *
 from csv import DictWriter
-from re import compile
+from re import compile, sub
 from urllib.request import urljoin
 
 
@@ -45,8 +46,7 @@ def reviewsFileFiller(reviewsList, outputFileName, _filter, link):
                 csvWrite.writerow(review)
         reviews_file.close()
     else:
-        pass
-        
+        print("\t this hotel has no reviews")
 
 def getNbrOfReviewPages(driver):
     numbers = driver.find_elements_by_xpath('//div[@id="review_list_page_container"]//div[@class="bui-pagination__nav" and @role="navigation"]//div[@class="bui-pagination__pages"]/div[@class="bui-pagination__list"]/div[@class="bui-pagination__item "]/a[@class="bui-pagination__link"]/span[@aria-hidden="true"]')
@@ -133,19 +133,23 @@ def getReviewParts(reviewLi):
 ######################################### main act ###############################################
 
 
-def main(hotelLink, filterNonArabic = False):        
+def main(hotelLink, browser, filterNonArabic = False):        
     url = urljoin(hotelLink, "#tab-reviews")
     print("parsing {} for reviews".format(url))
     pattern = compile(r'/[a-zA-Z0-9\-]*\.ar\.html')
-    fileName = pattern.findall(hotelLink)[0].rstrip(".ar.html").lstrip("/") + ".csv"
-    options = FirefoxOptions()
-    options.headless = True
-    driver = webdriver.Firefox(options=options)
+    fileName = sub(r'(/|.ar.html)', '', pattern.findall(hotelLink)[0]) + ".csv"
+    if browser == 'firefox':
+        options = FirefoxOptions()
+        options.headless = True
+        driver = webdriver.Firefox(options=options)
+    elif browser == 'chrome':
+        options = ChromeOptions()
+        options.headless = True
+        driver = webdriver.Chrome(options=options)
     try:
         driver.get(url)    
     except TimeoutException:
-        print("please check your Internet Connection")
-    driver.get(url)
+        raise Exception("please check your Internet Connection")
     time.sleep(7)
     soup = BeautifulSoup(driver.page_source, "html.parser")
     reviewsList = reviewsCollector(soup)

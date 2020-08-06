@@ -12,8 +12,10 @@ from ..reviews_selenium_crawl import main as parse_reviews
 class HotelsSpider(Spider):
     name = "hotels"
     city = ''
-    def __init__(self, city):
+    browser = ''
+    def __init__(self, city, browser):
         self.city = city
+        self.browser = browser
 
     def start_requests(self):
         urls = [get("https://www.booking.com/searchresults.ar.html", params={'ss': self.city}).url]
@@ -97,7 +99,7 @@ class HotelsSpider(Spider):
             if hotel['hotel_link'] in log_file.read():
                 continue
             else:
-                hotel['reviews_file'] = parse_reviews(hotel['hotel_link'])
+                hotel['reviews_file'] = parse_reviews(hotel['hotel_link'], self.browser)
                 logger.info("{} has been crawled for reviews successfully".format(hotel['hotel_link']))
                 yield hotel
                 

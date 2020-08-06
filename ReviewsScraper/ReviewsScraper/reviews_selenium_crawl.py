@@ -146,6 +146,8 @@ def main(hotelLink, browser, filterNonArabic = False):
         options = ChromeOptions()
         options.headless = True
         driver = webdriver.Chrome(options=options)
+    else:
+        raise Exception("you have no such driver for this browser !")
     try:
         driver.get(url)    
     except TimeoutException:

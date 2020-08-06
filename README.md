@@ -4,9 +4,9 @@ This is a project with Scrapy and Selenium combined in order to crawl booking.co
 
 ## Prerequisites
 
-1- you need to download and add Geckodriver (the driver for firefox browser) to your system's path.
+1- you need to download and add Geckodriver + Chromedriver (the drivers for firefox & chrome browsers) to your system's path.
 
-2- make sure Firefox is installed and compatible with Gecko driver.
+2- make sure Firefox/Chrome is installed and compatible with the driver's version.
 
 ## Usage Instructions
 
@@ -22,8 +22,9 @@ This is a project with Scrapy and Selenium combined in order to crawl booking.co
 
 6- navigate to ReviewsScraper folder: ``` cd ReviewsScraper ```
 
-7- open the local terminal and run: ``` scrapy crawl hotels -a city="<name_of_the_city>" -s filename="<file_name>.csv" --loglevel=ERROR ```
+7- open the local terminal and run: ``` scrapy crawl hotels -a city="<name_of_the_city>" -a browser="firefox" -s filename="<file_name>.csv" --loglevel=ERROR ```
 
+***Note: you can change browser argument value to "chrome", but still firefox is highly recommended.
 
 ## Expected Output: 
 

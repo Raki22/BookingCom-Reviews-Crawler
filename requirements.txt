@@ -41,7 +41,7 @@ ordered-set==3.1
 parsel==1.6.0
 Paste==3.2.4
 pid==2.2.3
-Pillow==7.0.0
+Pillow==8.1.1
 ply==3.11
 productmd==1.26
 Protego==0.1.16

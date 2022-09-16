@@ -30,7 +30,7 @@ langtable==0.0.51
 lazy-object-proxy==1.4.3
 libcomps==0.1.15
 lxml==4.6.2
-Mako==1.1.1.dev0
+Mako==1.2.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
 nftables==0.1
